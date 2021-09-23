@@ -43,10 +43,12 @@ import pickle
 import random
 import sys
 import time
+from trax.supervised.callbacks import WandbCallback
 
 from absl import logging
 import gin
 import jax
+import wandb
 import numpy as np
 import psutil
 import tensorflow as tf
@@ -635,6 +637,8 @@ class Loop:
 
     for callback in self._callbacks:
       if callback.call_at(step):
+        if type(callback) == WandbCallback:
+          callback.on_step_end(step, log_item = loss)
         callback.on_step_end(step)
 
     return (loss, stats)
