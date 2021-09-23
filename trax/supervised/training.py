@@ -43,7 +43,6 @@ import pickle
 import random
 import sys
 import time
-from trax.supervised.callbacks import WandbCallback
 
 from absl import logging
 import gin
@@ -63,6 +62,8 @@ from trax.fastmath import numpy as jnp
 from trax.fastmath import random as jax_random
 from trax.layers import base
 from trax.supervised import history as trax_history
+from trax.supervised.callbacks import WandbCallback
+
 
 
 _Evaluator = collections.namedtuple(
