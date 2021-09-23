@@ -32,6 +32,7 @@ import os
 
 import gin
 import numpy as np
+import wandb
 
 from trax import jaxboard
 from trax import layers as tl
@@ -59,6 +60,19 @@ class TrainingStepCallback:
     """Called by Loop after training steps, when call_at returned True."""
     raise NotImplementedError
 
+@gin.configurable
+class WandbCallback(TrainingStepCallback):
+  def __init__(self, loop):
+      super().__init__(loop)
+
+  def call_at(self, step):
+      pass
+  
+  def on_step_begin(self, step):
+      pass
+
+  def on_step_begin(self, step, log_item):
+      wandb.log(data = {"loss":log_item}, step = step)
 
 @gin.configurable
 class SerializedModelEvaluation(TrainingStepCallback):
